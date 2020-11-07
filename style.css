@@ -1,0 +1,20 @@
+.header-class {
+    width: 50%;
+    /*margin: auto;*/
+    
+}
+
+.header-class .start {
+    padding: 10px 20px;
+    color: rgb(113, 187, 29);
+    background-color: rgb(50, 57, 65);
+} 
+.start:hover {
+    color: lightslategray;
+
+}
+body {
+    margin: auto;
+    width: 100%;
+    background-color: cyan;
+}
