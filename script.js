@@ -30,9 +30,6 @@ var questionsAnswers = [
         choices: ['Football', 'Basketball', 'Soccer', 'Baseball'],
     }
 ]
-// var choicesList = document.createElement("ol");
-//  var questionsHeader = document.createElement("h1");
-// var multipleChoice = document.querySelector("#multipleChoice")
 function preparedQuestion() {
     var choicesList = document.createElement("ol");
     var questionsHeader = document.createElement("h1");
@@ -47,7 +44,6 @@ function preparedQuestion() {
         listItem.textContent = questionsAnswers[questionTracker].choices[i];
         listItem.setAttribute("data-list-id", listItem.textContent);
         listItem.setAttribute("id", "value" + counter);
-        //console.log(listItem);
         listItem.style.border = "1px solid #0000FF";
         listItem.style.padding = "10px 30px 10px 30px";
         listItem.style.width = "120px";
@@ -55,14 +51,19 @@ function preparedQuestion() {
         listItem.style.marginBottom = "5px";
         multipleChoice.appendChild(listItem);
         var targetId = "value" + counter;
-        var choiceId = document.getElementById(targetId);
-        //console.log(choiceId);
-        choiceId.addEventListener("click", function () {
-            var uniqueId = choiceId.getAttribute("data-list-id");
-            console.log(choiceId);
+        counter++;
+    }
+    var choiceId = document.querySelectorAll(".value");
+    for (var i = 0; i<choiceId.length; i++){
+        var storeClass = document.getElementById(choiceId[i].id)
+        storeClass.addEventListener("click", function (event) {
+            
+            var uniqueId = event.target.attributes.getNamedItem("data-list-id").value;
+            console.log(uniqueId);
             if (correctAnswers.includes(uniqueId)){
                 alert("Correct!");
                 quizScore++;
+                console.log(quizScore);
             }
             else {
                 alert("Wrong!");
@@ -70,28 +71,11 @@ function preparedQuestion() {
             questionTracker++;
             preparedQuestion();
         });
-        console.log("called");
-       counter++;
-       
     }
-
+ return quizScore;
 }
 var askQuestion = document.querySelector("#start");
 askQuestion.addEventListener("click", preparedQuestion);
 
 
-// var userChoice = document.querySelector("#multipleChoice");
-// userChoice.addEventListener("click", function (listId) {
-//     var uniqueId = userChoice.getAttribute("data-list-id");
-//     console.log(uniqueId);
-//     if (correctAnswers.includes(uniqueId)) {
-//         alert("Correct!");
-//         quizScore++;
-//     }
-//     else {
-//         alert("Wrong!");
-//     }
-//     questionTracker++;
-//     preparedQuestion();
-// });
 
