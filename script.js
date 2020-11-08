@@ -30,7 +30,7 @@ var questionsAnswers = [
         choices: ['Football', 'Basketball', 'Soccer', 'Baseball'],
     }
 ]
-function scoreReport(){
+function scoreReport() {
     var message = 'You got ' + quizScore;
     message += ' out of ' + questionsAnswers.length;
     message += ' questions correct.';
@@ -46,7 +46,7 @@ function scoreReport(){
     multipleChoice.appendChild(input);
 }
 function preparedQuestion() {
-    if (questionTracker===6){
+    if (questionTracker === 6) {
         scoreReport();
     }
     var choicesList = document.createElement("ol");
@@ -72,28 +72,44 @@ function preparedQuestion() {
         counter++;
     }
     var choiceId = document.querySelectorAll(".value");
-    for (var i = 0; i<choiceId.length; i++){
+    for (var i = 0; i < choiceId.length; i++) {
         var storeClass = document.getElementById(choiceId[i].id)
         storeClass.addEventListener("click", function (event) {
-            
+
             var uniqueId = event.target.attributes.getNamedItem("data-list-id").value;
-            console.log(uniqueId);
-            if (correctAnswers.includes(uniqueId)){
+            var checkingAnswer = correctAnswers.includes(uniqueId);
+            if (checkingAnswer) {
                 alert("Correct!");
                 quizScore++;
-                console.log(quizScore);
             }
             else {
                 alert("Wrong!");
             }
             questionTracker++;
-          
+
             preparedQuestion();
         });
     }
 }
 var askQuestion = document.querySelector("#start");
 askQuestion.addEventListener("click", preparedQuestion);
+
+// var count = 60;
+// var countDown = setInterval(function () {
+//     document.getElementById('count').innerHTML = "Time: " + count;
+//     count--;
+//     if (!checkingAnswer){
+//         count -= 10;
+//     }
+//     if (count == 0) {
+//         clearInterval(countDown);
+//         alert("Oops Sorry! Reach the time limit");
+//     }
+// }, 1000);
+
+
+
+
 
 
 
