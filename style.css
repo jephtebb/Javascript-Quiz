@@ -27,16 +27,28 @@
     display: flex;
 }
 .multipleChoice{
-    width: 80%;
+    width: 75%;
     height: 400px;
     margin:auto;
     border: 1px solid rgb(113, 187, 29);
+}
+#multipleChoice h1 {
+    text-align: center;
+    width: 80%;
+}
+.value:hover{
+  background-color: rgb(113, 187, 29);
 }
 body {
     margin: auto;
     width: 100%;
     background-color: cyan;
 }
-#count {
+#timer {
     margin-right: auto;
+}
+.orderedList{
+    margin-left:auto;
+    width:80%;
+
 }

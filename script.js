@@ -2,6 +2,7 @@ var quizScore = 0;
 var questionTracker = 0;
 var listId = 0;
 var counter = 0;
+var countDown = 60;
 var correctAnswers = ['Fritay', 'Jeff', 'Ayahna', 'January', '2015', 'Soccer'];
 var questionsAnswers = [
     {
@@ -44,12 +45,17 @@ function scoreReport() {
     multipleChoice.appendChild(headerSummary);
     multipleChoice.appendChild(mesaj);
     multipleChoice.appendChild(input);
+    console.log(multipleChoice);
 }
 function preparedQuestion() {
-    if (questionTracker === 6) {
-        scoreReport();
-    }
+    timerStart();
+    nextQuestion();
+}
+
+var nextQuestion = function() {
+
     var choicesList = document.createElement("ol");
+    choicesList.className = "orderedList";
     var questionsHeader = document.createElement("h1");
     var multipleChoice = document.querySelector("#multipleChoice");
     var quests = questionsAnswers[questionTracker].questions;
@@ -58,7 +64,6 @@ function preparedQuestion() {
     for (var i = 0; i < Object.keys(questionsAnswers[questionTracker].choices).length; i++) {
         var listItem = document.createElement("li");
         listItem.className = "value";
-        choicesList.appendChild(listItem);
         listItem.textContent = questionsAnswers[questionTracker].choices[i];
         listItem.setAttribute("data-list-id", listItem.textContent);
         listItem.setAttribute("id", "value" + counter);
@@ -67,7 +72,9 @@ function preparedQuestion() {
         listItem.style.width = "120px";
         listItem.style.backgroundColor = "lightslategray";
         listItem.style.marginBottom = "5px";
-        multipleChoice.appendChild(listItem);
+        choicesList.appendChild(listItem);
+        multipleChoice.appendChild(choicesList);
+        console.log(multipleChoice);
         var targetId = "value" + counter;
         counter++;
     }
@@ -78,34 +85,49 @@ function preparedQuestion() {
 
             var uniqueId = event.target.attributes.getNamedItem("data-list-id").value;
             var checkingAnswer = correctAnswers.includes(uniqueId);
+            var checkAns = document.createElement("h4");
+            checkAns.className = "checking";
+            multipleChoice.appendChild(checkAns);
             if (checkingAnswer) {
-                alert("Correct!");
+                checkAns.textContent = "Correct!";
                 quizScore++;
             }
             else {
-                alert("Wrong!");
+                checkAns.textContent = "Wrong!";
+                countDown -= 10;
             }
+            questionsHeader.remove();
+            choicesList.remove();
+            //setTimeout(function(){ ; }, 3000);
+            checkAns.remove();
+
             questionTracker++;
 
-            preparedQuestion();
+            if (questionTracker < questionsAnswers.length) {
+                nextQuestion();
+            } else {
+                scoreReport();
+            }
         });
     }
 }
+
+var timerStart = function() {
+    var timer = setInterval(function () {
+ 
+        if (countDown >= 0) {
+            document.getElementById('timer').innerHTML = "Time: " + countDown;
+            
+            countDown--;
+        }
+            else {
+                clearInterval(timer);
+                alert("Oops Sorry! Reach the time limit");
+            }        
+    }, 1000);
+}
 var askQuestion = document.querySelector("#start");
 askQuestion.addEventListener("click", preparedQuestion);
-
-// var count = 60;
-// var countDown = setInterval(function () {
-//     document.getElementById('count').innerHTML = "Time: " + count;
-//     count--;
-//     if (!checkingAnswer){
-//         count -= 10;
-//     }
-//     if (count == 0) {
-//         clearInterval(countDown);
-//         alert("Oops Sorry! Reach the time limit");
-//     }
-// }, 1000);
 
 
 
