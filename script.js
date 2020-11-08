@@ -30,7 +30,25 @@ var questionsAnswers = [
         choices: ['Football', 'Basketball', 'Soccer', 'Baseball'],
     }
 ]
+function scoreReport(){
+    var message = 'You got ' + quizScore;
+    message += ' out of ' + questionsAnswers.length;
+    message += ' questions correct.';
+    var multipleChoice = document.querySelector("#multipleChoice");
+    var headerSummary = document.createElement("h2");
+    headerSummary.textContent = "All Done!";
+    mesaj = document.createElement("p");
+    mesaj.textContent = message;
+    var input = document.createElement("input");
+    input.placeholder = "Enter your initials..";
+    multipleChoice.appendChild(headerSummary);
+    multipleChoice.appendChild(mesaj);
+    multipleChoice.appendChild(input);
+}
 function preparedQuestion() {
+    if (questionTracker===6){
+        scoreReport();
+    }
     var choicesList = document.createElement("ol");
     var questionsHeader = document.createElement("h1");
     var multipleChoice = document.querySelector("#multipleChoice");
@@ -69,13 +87,14 @@ function preparedQuestion() {
                 alert("Wrong!");
             }
             questionTracker++;
+          
             preparedQuestion();
         });
     }
- return quizScore;
 }
 var askQuestion = document.querySelector("#start");
 askQuestion.addEventListener("click", preparedQuestion);
+
 
 
 
