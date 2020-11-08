@@ -31,21 +31,45 @@ var questionsAnswers = [
         choices: ['Football', 'Basketball', 'Soccer', 'Baseball'],
     }
 ]
+function scoreDetails(){
+    var highScores = document.createElement("h3");
+    var allScores = document.createElement("input");
+    var goBack = document.createElement("button");
+    goBack.textContent = "Retake";
+    var clearHighScores = document.createElement("button");
+    clearHighScores.textContent = "Clear High Scores";
+    highScores.className = "highScores";
+    highScores.textContent = "High Scores: ";
+    var multipleChoice = document.querySelector("#multipleChoice");
+    multipleChoice.appendChild(highScores);
+    multipleChoice.appendChild(allScores);
+    multipleChoice.appendChild(goBack);
+    multipleChoice.appendChild(clearHighScores);
+    goBack.addEventListener("click", nextQuestion);
+}
 function scoreReport() {
     var message = 'You got ' + quizScore;
     message += ' out of ' + questionsAnswers.length;
     message += ' questions correct.';
     var multipleChoice = document.querySelector("#multipleChoice");
     var headerSummary = document.createElement("h2");
+    var report = document.createElement("div");
+    report.className = "reportData";
     headerSummary.textContent = "All Done!";
     mesaj = document.createElement("p");
     mesaj.textContent = message;
     var input = document.createElement("input");
     input.placeholder = "Enter your initials..";
+    var buttonSubmit = document.createElement("button");
+    buttonSubmit.className = "submitScore";
+    buttonSubmit.setAttribute("type", "submit");
+    buttonSubmit.textContent = "Submit";
     multipleChoice.appendChild(headerSummary);
     multipleChoice.appendChild(mesaj);
-    multipleChoice.appendChild(input);
-    console.log(multipleChoice);
+    report.appendChild(input);
+    report.appendChild(buttonSubmit);
+    multipleChoice.appendChild(report);
+    buttonSubmit.addEventListener("click", scoreDetails);
 }
 function preparedQuestion() {
     timerStart();
@@ -74,7 +98,6 @@ var nextQuestion = function() {
         listItem.style.marginBottom = "5px";
         choicesList.appendChild(listItem);
         multipleChoice.appendChild(choicesList);
-        console.log(multipleChoice);
         var targetId = "value" + counter;
         counter++;
     }
