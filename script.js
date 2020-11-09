@@ -32,20 +32,45 @@ var questionsAnswers = [
     }
 ]
 function scoreDetails(){
-    var highScores = document.createElement("h3");
-    var allScores = document.createElement("input");
+    var highScore = document.createElement("h3");
+    var allScore = document.createElement("input");
+    allScore.setAttribute("id","input");
     var goBack = document.createElement("button");
     goBack.textContent = "Retake";
     var clearHighScores = document.createElement("button");
     clearHighScores.textContent = "Clear High Scores";
-    highScores.className = "highScores";
-    highScores.textContent = "High Scores: ";
+    highScore.className = "highScore";
+    highScore.textContent = "High Scores: ";
     var multipleChoice = document.querySelector("#multipleChoice");
-    multipleChoice.appendChild(highScores);
-    multipleChoice.appendChild(allScores);
+    multipleChoice.appendChild(highScore);
+    multipleChoice.appendChild(allScore);
     multipleChoice.appendChild(goBack);
     multipleChoice.appendChild(clearHighScores);
-    goBack.addEventListener("click", nextQuestion);
+   // goBack.addEventListener("click", nextQuestion);
+    const yourScore = document.getElementById("yourScore");
+    const inputT = document.getElementById("localStorageInput");
+    console.log(inputT);
+    const submitT = document.getElementById("submit");
+    const allScores = document.getElementById("input");
+    submitT.onclick = function(){
+        const key = inputT.key;
+        const value = yourScore.Value;
+
+        if (key&&value){
+            localStorage.setItem(key,value);
+            location.reload();
+        }
+    
+
+        console.log(key);
+        console.log(value);
+    };
+    for (var i = 0; i<localStorage.length; i++){
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+        allScore.innerHTML += `${key}: ${value}<br />`
+    }
+  
 }
 function scoreReport() {
     var message = 'You got ' + quizScore;
@@ -58,15 +83,20 @@ function scoreReport() {
     headerSummary.textContent = "All Done!";
     mesaj = document.createElement("p");
     mesaj.textContent = message;
-    var input = document.createElement("input");
-    input.placeholder = "Enter your initials..";
+    var inputTo = document.createElement("input");
+    inputTo.placeholder = "Enter your initials..";
+    inputTo.setAttribute("id", "localStorageInput");
+    yourScore = document.createElement("input");
+    yourScore.placeholder = "Enter your final score..";
+    yourScore.setAttribute("id","yourScore");
     var buttonSubmit = document.createElement("button");
     buttonSubmit.className = "submitScore";
-    buttonSubmit.setAttribute("type", "submit");
+    buttonSubmit.setAttribute("id", "submit");
     buttonSubmit.textContent = "Submit";
     multipleChoice.appendChild(headerSummary);
     multipleChoice.appendChild(mesaj);
-    report.appendChild(input);
+    report.appendChild(inputTo);
+    report.appendChild(yourScore);
     report.appendChild(buttonSubmit);
     multipleChoice.appendChild(report);
     buttonSubmit.addEventListener("click", scoreDetails);
